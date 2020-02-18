@@ -57,6 +57,17 @@ export class GraphDataService {
       }
     }));
   }
+  getInitialDataV3() {
+    // const url = 'http://localhost:3050/api/initialdatav3';
+    const url = '/api/initialdatav3';
+    return this.publicHttp.get(url).pipe(map(data => {
+      if (!!data) {
+        return data;
+      } else {
+        return of({});
+      }
+    }));
+  }
   getSearchDataV2(body) {
     // const url = 'http://localhost:3050/api/graph/datav2';
     const url = '/api/graph/datav2';

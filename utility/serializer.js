@@ -91,7 +91,7 @@ function processNodes(nodeArray, showDeleted = false) {
                         properties: node.properties || null,
                         type: node.labels || null,
                         id: node.identity.low,
-                        label: node.properties.Name || 'No Name',
+                        label: node.properties.name || 'No Name',
                         font: { align: 'middle' },
                         value: 30
                     }

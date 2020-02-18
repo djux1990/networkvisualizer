@@ -20,8 +20,8 @@ export class DashboardSidebarComponent implements OnInit, OnChanges {
   @Input('nodeLimitEnterEvent') nodeLimitOnEnter: any = null;
   private showDisabled = false;
   defaultColor = {
-    Academia: 'c_ff4444',
-    Consulting: 'c_ffbb33',
+    Trainer: 'c_ff4444',
+    Skill: 'c_ffbb33',
     Government: 'c_00C851',
     'Impact Investor': 'c_33b5e5',
     'International Agency': 'c_CC0000',
@@ -59,7 +59,7 @@ export class DashboardSidebarComponent implements OnInit, OnChanges {
   // Query to fetch all labels
   public queryObj = {
     raw: true,
-    query: `MATCH (p) WITH DISTINCT keys(p) AS keys,p
+    query: `MATCH (p) WHERE p:Trainer OR p:Skill WITH DISTINCT keys(p) AS keys,p
      with DISTINCT labels(p) as label,keys 
      UNWIND keys AS keyslisting WITH DISTINCT keyslisting AS allfields,label
      RETURN collect(allfields),label`
@@ -140,14 +140,19 @@ export class DashboardSidebarComponent implements OnInit, OnChanges {
       if(results[0].hasOwnProperty('nodes')){
         // push name to top
         this.setNodeProperties(results[0]);
-        let index = this.totalAtrributeOptions.findIndex(obj => obj['attribute'] === "Name")
-        this.totalAtrributeOptions = _.cloneDeep(this.swap(this.totalAtrributeOptions, index, 0));
+        // let index = this.totalAtrributeOptions.findIndex(obj => obj['attribute'] === "name")
+        // this.totalAtrributeOptions = _.cloneDeep(this.swap(this.totalAtrributeOptions, index, 0));
       }
       if(results[1].length > 0){
         // push type to second position
         this.setTypes(results[1]);
-        let index = this.totalAtrributeOptions.findIndex(obj => obj['attribute'] === "Type")
-        this.totalAtrributeOptions = _.cloneDeep(this.swap(this.totalAtrributeOptions, index, 1));
+        // let index = this.totalAtrributeOptions.findIndex((obj) =>  {
+        //   if(!!obj) {
+        //     return obj['attribute'] === "Type"
+        //   }
+        //   return false;
+        // });
+        // this.totalAtrributeOptions = _.cloneDeep(this.swap(this.totalAtrributeOptions, index, 1));
       }
     }, err => {
       throwError({error : 'Error while reading graph properties'});
@@ -415,7 +420,7 @@ export class DashboardSidebarComponent implements OnInit, OnChanges {
           this.sharedGraphData.setNodeProperties(this.totalNodesProperties);
           if (this.totalNodesProperties) {
             Object.keys(this.totalNodesProperties).forEach(keyName => {
-              if (keyName !== 'deleted' && keyName !== 'color') {
+              if (keyName !== 'deleted' && keyName !== 'color' && keyName !== 'name' && keyName !== 'type') {
                 this.totalAtrributeOptions.push({ attribute: keyName, options: this.totalNodesProperties[keyName], rotate: false });
               }
             });
@@ -435,7 +440,7 @@ export class DashboardSidebarComponent implements OnInit, OnChanges {
       this.sharedGraphData.setProcessedData(this.processedData);
       this.sharedGraphData.setNodeTypes2(this.nodeTypes2);
       // this.typeOptions = this.nodeTypes2;
-      this.totalAtrributeOptions.push({ attribute: 'Type', options: this.nodeTypes2, rotate: false });
+      // this.totalAtrributeOptions.push({ attribute: 'Type', options: this.nodeTypes2, rotate: false });
       this.checkRotate();
       return true;
     }

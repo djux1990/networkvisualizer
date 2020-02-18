@@ -63,7 +63,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"modules-statistics-statistics-module":"modules-statistics-statistics-module"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"modules-dashboard-v2-copy-dashboard-v2-module":"modules-dashboard-v2-copy-dashboard-v2-module","modules-statistics-statistics-module":"modules-statistics-statistics-module"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function

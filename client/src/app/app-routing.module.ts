@@ -9,6 +9,14 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: './modules/dashboard-v2/dashboard-v2.module#DashboardModule'
+  },
+  {
+    path: 'batchmates/:name',
+    loadChildren: './modules/dashboard-v2-copy/dashboard-v2.module#DashboardModule#MainComponent'
+  },
+  {
+    path: 'batchmates',
+    loadChildren: './modules/dashboard-v2-copy/dashboard-v2.module#DashboardModule#MainComponent'
   }
 ];
 

@@ -109,6 +109,25 @@ router.get('/initialdatav2', (req, res) => {
             res.sendStatus(500);
         });
 });
+
+router.get('/initialdatav3', (req, res) => {
+    console.log('initial data');
+    // get initial data from the data base
+    // extract whether user wants to view deleted data only
+    let showDeleted = false;
+    if (req.query.hasOwnProperty('deleted')) {
+        showDeleted = req.query.deleted === 'true' ? true : false;
+    }
+    neo4j.getDataV3({ query: "", showDeleted })
+        .then(response => {
+            res.send(response);
+        })
+        .catch(err => {
+            console.log('err occured while sending back ', err);
+            res.sendStatus(500);
+        });
+});
+
 router.post('/graph/datav2', (req, res) => {
     console.log('get graph data');
     // get the body, else return the error that no body is provided

@@ -383,6 +383,33 @@ var getDataV2 = (queryObj) => {
         });
 }
 
+var getDataV3 = (queryObj) => {
+    let query = "";
+    if (!queryObj.query || queryObj.query.length <= 0) {
+        queryObj.query = neoConfig.initial_query_v3
+    }
+    console.log("Initial Query : ", queryObj.query);
+    return runQuery(queryObj.query)
+        .then(result => {
+            let serializedData = serializer.Neo4JtoVisFormat(JSON.stringify(result.records), queryObj.showDeleted);
+            console.log('serialized data is ', serializedData.seperateNodes.length, serializedData.seperateEdges.length);
+            neo4Jdriver.close();
+            return new Promise((res, rej) => {
+                if (serializedData.seperateNodes.length > 0 || serializedData.seperateEdges.length > 0) {
+                    console.log('successfully returining the request');
+                    res(serializedData);
+                } else {
+                    console.log('error while returning data');
+                    rej('Both are empty in serialized data');
+                }
+            });
+        })
+        .catch(err => {
+            console.log('an error occured while retrieving', err);
+            neo4Jdriver.close();
+        });
+}
+
 function processRequestBasedOnNodesLength(requestData) {
     return runQueryWithTypesV2({ relation: requestData.relationsArray, nodes: requestData.totalNodes, limit: requestData.nodeLimit, showDeleted: requestData.showDeleted });    
 }
@@ -1190,6 +1217,7 @@ module.exports = {
     getGraphData,
     getGraphDataV2,
     getDataV2,
+    getDataV3,
     getGraphLabelData,
     getGraphLabels,
     createNode,

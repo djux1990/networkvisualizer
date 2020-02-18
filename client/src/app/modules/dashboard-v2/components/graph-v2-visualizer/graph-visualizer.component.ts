@@ -352,7 +352,7 @@ export class GraphVisualizerComponent implements OnInit {
           if(node['properties']['color']){
             temColorObj[node.type[0]] = node['properties']['color'];
           }else{
-            temColorObj[node.type[0]] = this.colorConfig['initialColor']['colorCode'];
+            temColorObj[node.type[0]] = this.colorConfig['defaultColor'][node.type[0]];
           }
         }
       }
@@ -826,7 +826,7 @@ export class GraphVisualizerComponent implements OnInit {
       let finalString = '';
       if (propertyObject['properties'].hasOwnProperty('deleted')) {
         Object.keys(propertyObject['properties']).filter(key => {
-          if (key !== 'deleted' && key !== 'color') {
+          if (key !== 'deleted' && key !== 'color' && key !== 'Type' && key !== 'skill' && key !== 'tag') {
             finalString += `<strong>${key} :</strong> ${propertyObject['properties'][key]} <br>`;
           }
         });
@@ -906,7 +906,7 @@ export class GraphVisualizerComponent implements OnInit {
     }
   }
 
-  // to filter data from alldata array and store it to new array
+  // to filter data from alldata array and store it to new array  
   setFilteredData(isDeletedToggle = false) {
     this.filteredGraphData['nodes'] = [];
     this.filteredGraphData['edges'] = [];

@@ -8,9 +8,11 @@ export class ColorServiceService {
   private colorConfig = {
     defaultColor: {
       // Academia: '#ff4444',
+      Skill: '#FF8800',
+      Trainer: '#33b5e5',
       // Consulting: '#ffbb33',
       // Government: '#00C851',
-      // 'Impact Investor': '#33b5e5',
+      // 'Impact Investor': '#ffbb33',
       // 'International Agency': '#CC0000',
       // Media: '#FF8800',
       // 'NGO/CBO': '#007E33',
