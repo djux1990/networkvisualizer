@@ -3921,7 +3921,9 @@ var DashboardSidebarComponent = /** @class */ (function () {
             this.sharedGraphData.setNodeProperties(this.totalNodesProperties);
             if (this.totalNodesProperties) {
                 Object.keys(this.totalNodesProperties).forEach(function (keyName) {
-                    if (keyName !== 'deleted' && keyName !== 'color' && keyName !== 'name' && keyName !== 'type') {
+                    if (keyName !== 'deleted' && keyName !== 'color' && keyName !== 'name' && keyName !== 'type'
+                        && keyName !== 'class' && keyName !== 'date' && keyName !== 'course' && keyName !== 'id'
+                        && keyName !== 'trainer' && keyName !== 'tag') {
                         _this.totalAtrributeOptions.push({ attribute: keyName, options: _this.totalNodesProperties[keyName], rotate: false });
                     }
                 });

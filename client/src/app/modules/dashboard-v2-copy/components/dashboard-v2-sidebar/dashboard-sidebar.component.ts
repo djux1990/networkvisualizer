@@ -59,7 +59,7 @@ export class DashboardSidebarComponent implements OnInit, OnChanges {
   // Query to fetch all labels
   public queryObj = {
     raw: true,
-    query: `MATCH (p) WITH DISTINCT keys(p) AS keys,p
+    query: `MATCH (p) WHERE p:Batch OR p:Student WITH DISTINCT keys(p) AS keys,p
      with DISTINCT labels(p) as label,keys 
      UNWIND keys AS keyslisting WITH DISTINCT keyslisting AS allfields,label
      RETURN collect(allfields),label`

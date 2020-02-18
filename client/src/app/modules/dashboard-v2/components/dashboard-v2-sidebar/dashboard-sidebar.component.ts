@@ -420,7 +420,9 @@ export class DashboardSidebarComponent implements OnInit, OnChanges {
           this.sharedGraphData.setNodeProperties(this.totalNodesProperties);
           if (this.totalNodesProperties) {
             Object.keys(this.totalNodesProperties).forEach(keyName => {
-              if (keyName !== 'deleted' && keyName !== 'color' && keyName !== 'name' && keyName !== 'type') {
+              if (keyName !== 'deleted' && keyName !== 'color' && keyName !== 'name' && keyName !== 'type'
+              && keyName !== 'class' && keyName !== 'date' && keyName !== 'course' && keyName !== 'id'
+              && keyName !== 'trainer' && keyName !== 'tag') {
                 this.totalAtrributeOptions.push({ attribute: keyName, options: this.totalNodesProperties[keyName], rotate: false });
               }
             });
