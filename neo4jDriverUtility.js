@@ -941,7 +941,7 @@ function createNewRelationQuery(data) {
     // let subQuery = addProperties(data.properties);
     let subQuery = dataUtility.processProperties('r', data.properties);
     // `merge (source)-[r:\`${data.type[0]}\`]-(target)`
-    let query = `Match (source {Name: "${source}"}),(target {Name: "${target}"})
+    let query = `Match (source {name: "${source}"}),(target {name: "${target}"})
     MERGE (source)-[r: \`${relationType}\`]->(target)
     ON CREATE SET ${subQuery}
     ON MATCH SET ${subQuery}

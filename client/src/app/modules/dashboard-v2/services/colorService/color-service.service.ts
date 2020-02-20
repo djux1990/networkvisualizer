@@ -10,6 +10,7 @@ export class ColorServiceService {
       // Academia: '#ff4444',
       Skill: '#FF8800',
       Trainer: '#33b5e5',
+      Spot: '#0d47a1',
       // Consulting: '#ffbb33',
       // Government: '#00C851',
       // 'Impact Investor': '#ffbb33',

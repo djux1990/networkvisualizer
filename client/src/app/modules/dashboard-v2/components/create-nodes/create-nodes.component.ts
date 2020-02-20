@@ -127,7 +127,7 @@ export class CreateNodesComponent implements OnInit, OnChanges, DoCheck {
       this.nodeTypes2 = data;
     })
     this.sharedGraphSrvc.relationTypeOptions.subscribe(data=>{
-      this.relationTypeOptions = data;
+      this.relationTypeOptions = ['CONNECTED_TO'];
     })
     this.sharedGraphSrvc.relationsData.subscribe(data=>{
       this.relationsData = data;
@@ -193,9 +193,9 @@ export class CreateNodesComponent implements OnInit, OnChanges, DoCheck {
       let extractedTypes = this.relationTypeOptions;
       // add the new type option on top
       let index = extractedTypes.indexOf(this.ADD_NEW_TYPE);
-      if(index < 0){
-        extractedTypes = this.pushOnTop(this.ADD_NEW_TYPE, extractedTypes);
-      }
+      // if(index < 0){
+      //   extractedTypes = this.pushOnTop(this.ADD_NEW_TYPE, extractedTypes);
+      // }
       // pass it into the options for dropdown
       this.relationTypeOptions = _.cloneDeep(extractedTypes);
       return true;
@@ -345,6 +345,7 @@ export class CreateNodesComponent implements OnInit, OnChanges, DoCheck {
         this.sharedGraphSrvc.nodeDetails.subscribe(nodeDetailsArray => {
           // this variable will have arrays of nodes in same sequesnce the ids were sent
           console.log('recieved connected node information', nodeDetailsArray);
+          
           this.selectedNodeNameSource = nodeDetailsArray[0]['label'] || '';
           this.selectedNodeNameTarget = nodeDetailsArray[1]['label'] || '';
         });
@@ -586,8 +587,8 @@ export class CreateNodesComponent implements OnInit, OnChanges, DoCheck {
       properties: {}
     };
 
-    relationData.type = [this.selectedType];
-
+    relationData.type = ['CONNECTED_TO'];
+    const date = new Date().toDateString();
 
     // extract properties from modal if entered
     /* $('#createRelationModal :text').each(function() {
@@ -598,6 +599,8 @@ export class CreateNodesComponent implements OnInit, OnChanges, DoCheck {
     console.log('properties object on submit rel is  ', this.selectedPropertiesObject);
 
     relationData.properties = _.cloneDeep(this.selectedPropertiesObject);
+    relationData.properties = {date};
+
     try {
       relationData = this.validateRelationData(relationData);
       console.log('relationship created is ', relationData);
@@ -1319,10 +1322,29 @@ export class CreateNodesComponent implements OnInit, OnChanges, DoCheck {
         setTimeout(() => resolve(this.totalName.filter(item => item.key.match(regex))), 500));
     } else {
       // to set initial dropdown
-      return Promise.resolve(this.totalName);
+      return Promise.resolve([{key: 'Sumit'}]);
     }
   }
 
+  optionLookUp2 = (query: string, initial: number) => {
+    // to change lookup option according to search 
+    if (!!query && query.length > 0) {
+      let regex: RegExp | string;
+      try {
+        regex = new RegExp(query, "i");
+      } catch (e) {
+        regex = query;
+      }
+      return new Promise(resolve =>
+        setTimeout(() => resolve(this.totalName.filter(item => item.key.match(regex))), 500));
+    } else {
+      // to set initial dropdown
+      this.totalName.filter((nameObject) => {
+        return nameObject.key !== 'Sumit';
+      });
+      return Promise.resolve(this.totalName);
+    }
+  }
 
   restoreData(restoreType) {
     // fetch the id of element requested to restore

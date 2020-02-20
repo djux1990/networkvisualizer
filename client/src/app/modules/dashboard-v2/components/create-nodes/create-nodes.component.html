@@ -1,17 +1,17 @@
 <div class="container-fluid pr-0">
-    <div class="btn-group nodes">
+    <!-- <div class="btn-group nodes">
         <button type="button" (click)="createNode()" data-toggle="modal" data-target="#createNodeModal" class="circularBtn" aria-expanded="false">
       <img src="./../../../../../assets/create_nodes.svg">
     </button>
-    </div>
+    </div> -->
     <div class="btn-group relationships">
         <button type="button" (click)="createRelation()" data-toggle="modal" data-target="#createRelationModal" class="circularBtn" aria-expanded="false">
             <img src="./../../../../../assets/create_relations.svg">
     </button>
     </div>
-    <div class="btn-group algorithms">
+    <!-- <div class="btn-group algorithms">
         <algo-runner-toolbar></algo-runner-toolbar>
-    </div>
+    </div> -->
 </div>
 <!--modal template to show when node is to be created-->
 <div class="modal fade" id="createNodeModal" tabindex="-1" role="dialog" aria-labelledby="NodeModalLabel" aria-hidden="true">
@@ -150,10 +150,10 @@
             </div>
             <div class="modal-body">
                 <div class="modalItem">
-                    <p class="sectionName">
+                    <!-- <p class="sectionName">
                         {{TYPE_TEXT}}
-                    </p>
-                    <span class="inputSpan">
+                    </p> -->
+                    <!-- <span class="inputSpan">
                         <ng-container *ngIf="selectedType !== ADD_NEW_TYPE">
                                 <sui-select class="selection"
                                 [(ngModel)]="selectedType"
@@ -166,19 +166,19 @@
                                            [value]="option">
                         </sui-select-option>
                     </sui-select>
-                        </ng-container>
-                        <ng-container *ngIf="selectedType === ADD_NEW_TYPE">
+                        </ng-container> -->
+                        <!-- <ng-container *ngIf="selectedType === ADD_NEW_TYPE">
                             <div class="ui input typeTextBox"><input type="text" placeholder="Enter Type..." id="id_newLabelRelation"></div>
-                    </ng-container>
-                    </span>
+                    </ng-container> -->
+                    <!-- </span> -->
                 </div>
-                <div class="modalItem" *ngIf="typeProperties?.length > 0 && selectedType?.length > 0">
+                <!-- <div class="modalItem">
                     <h5 class="propertyLabel">
                         Properties <span class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" [title]="toolTipText"></span>
-                    </h5>
+                    </h5> -->
 
 
-                    <ng-container *ngFor="let data of typeProperties">
+                    <!-- <ng-container *ngFor="let data of typeProperties">
                         <div class="modalItem">
                             <p class="sectionName">{{data}}</p>
                             <span class="inputSpan">
@@ -195,18 +195,18 @@
                                             <i class="asterisk icon"></i>
                                         </div>
                                     </div>
-                                </ng-container>
+                                </ng-container> -->
                                 <!-- <input type="text" id="id_{{data}}"> -->
-                            </span>
+                            <!-- </span>
                             <span class="supportIcons" *ngIf="(data?.length > 0) && data !== 'Name' && !availablePropertyList[data]?.enableNewProperty && !restoreOptions" (click)="deleteProperty(data, 'relation')"><i class="far fa-trash-alt"></i></span>
                             <span class="supportIcons" *ngIf="(data?.length > 0) && data !== 'Name' && availablePropertyList[data]?.enableNewProperty && !restoreOptions" (click)="availablePropertyList[data].enableNewProperty = false"><i class="far fa-times-circle" style="color: red;"></i></span>
                             <span class="supportIcons nameKey" *ngIf="(data?.length > 0) && data === 'Name' && !restoreOptions">
                                 <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" [title]="'Name is mandatory and cannot be deleted'" ></i>
-                            </span>
-                        </div>
-                    </ng-container>
-                </div>
-                <form id="NewPropertyGroupRel" *ngIf="enableNewTemplate">
+                            </span> -->
+                        <!-- </div> -->
+                    <!-- </ng-container> -->
+                <!-- </div> -->
+                <!-- <form id="NewPropertyGroupRel" *ngIf="enableNewTemplate">
                     <div class="modalItem">
                         <div class="ui divider"></div>
                         <p class="sectionName">Property Name</p>
@@ -219,21 +219,21 @@
                         <br/>
                         <div class="ui divider lower"></div>
                     </div>
-                </form>
+                </form> -->
 
 
-                <div class="modalItem buttonContainer">
+                <!-- <div class="modalItem buttonContainer">
                     <a class="newLink2" *ngIf="selectedType?.length > 0 && selectedType !== ADD_NEW_TYPE && !enableNewTemplate && !restoreOptions" (click)="addNewProperty('relation')">Add New Property</a>
                     <a class="newLink2" *ngIf="selectedType?.length > 0 && selectedType !== ADD_NEW_TYPE && enableNewTemplate && !restoreOptions" (click)="saveNewProperty('relation')">Save Property</a>
-                </div>
+                </div> -->
 
-                <div class="relationScope" *ngIf="selectedType?.length > 0 && selectedType !== ADD_NEW_TYPE">
+                <div class="relationScope">
                     <div class="modalItem">
-                        <h5 class="propertyLabel">
+                        <!-- <h5 class="propertyLabel">
                             Connection <span class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" [title]="toolTipText"></span>
-                        </h5>
+                        </h5> -->
                         <p class="sectionName">From</p>
-                        <span class="inputSpan" *ngIf="!disabledFromBox">
+                        <span class="inputSpan">
                             <sui-select class="selection"
                                 [(ngModel)]="selectedNodeNameSource"
                                 (ngModelChange)="updateList('to',[selectedNodeNameSource])"
@@ -256,11 +256,11 @@
                     </div>
                     <div class="modalItem">
                         <p class="sectionName">To</p>
-                        <span class="inputSpan" *ngIf="!disabledToBox">
+                        <span class="inputSpan">
                             <sui-select class="selection"
                                 [(ngModel)]="selectedNodeNameTarget"
                                 (ngModelChange)="updateList('from',[selectedNodeNameTarget])"
-                                [optionsLookup]="optionLookUp"
+                                [optionsLookup]="optionLookUp2"
                                 labelField="key"
                                 valueField="key"
                                 [isSearchable]="true"
@@ -282,7 +282,7 @@
             <div class="modal-footer" *ngIf="selectedType !== ADD_NEW_TYPE">
                 <button type="button" class="btn btn-danger deleteBtn left" *ngIf="(popupConfig.editRelationPopup === true || editRelationPopup === true) && !restoreOptions" style="color: white;" (click)="activateDelete('deleteModal', 'relation')">Delete</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" style="color: red;">Cancel</button>
-                <button type="button" class="btn btn-primary create" (click)="submitRelModal()" *ngIf="(popupConfig.createRelationPopup === true || createRelationPopup === true) && !restoreOptions" [disabled]="selectedType?.length <= 0 || selectedNodeNameTarget?.length <= 0 || selectedNodeNameSource?.length <= 0">Create</button>
+                <button type="button" class="btn btn-primary create" (click)="submitRelModal()" *ngIf="(popupConfig.createRelationPopup === true || createRelationPopup === true) && !restoreOptions" [disabled]="selectedNodeNameTarget?.length <= 0 || selectedNodeNameSource?.length <= 0">Create</button>
                 <button type="button" class="btn btn-primary create" (click)="submitRelModal('edit')" *ngIf="(popupConfig.editRelationPopup === true || editRelationPopup === true) && !restoreOptions" [disabled]="selectedType?.length <= 0 || selectedNodeNameTarget?.length <= 0 || selectedNodeNameSource?.length <= 0"
                     id="edit_btn">Update</button>
                 <button type="button" id="restoreBtn" class="btn btn-info restoreBtn" *ngIf="(popupConfig.editRelationPopup === true || editRelationPopup === true) && restoreOptions" style="color: white;" (click)="restoreData('relation')">Restore </button>

@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, SimpleChanges, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { GraphDataService } from 'src/app/modules/core/services/graph-data-service/graph-data.service';
 import { Network, DataSet} from 'vis';
 import * as _ from 'lodash';
@@ -51,6 +51,7 @@ export class GraphVisualizerComponent implements OnInit {
   selectedCount;
   public nodeLimit: any = 149;
   public emptyNodeLimit = 179;
+  public tick = 0;
   public colorConfig = {};
   public editNodeData = null;
   public editRelationData = null;
@@ -92,7 +93,8 @@ export class GraphVisualizerComponent implements OnInit {
     private sharedGraphService: SharedGraphService,
     private snackBar: MaterialService,
     private colorService: ColorServiceService, private algoRunnerShrdSrvc: ToolbarSharedService,
-    private CoreFilterSrvc: CoreFilterService) { }
+    private CoreFilterSrvc: CoreFilterService,
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.loader = true;
@@ -353,6 +355,11 @@ export class GraphVisualizerComponent implements OnInit {
             temColorObj[node.type[0]] = node['properties']['color'];
           }else{
             temColorObj[node.type[0]] = this.colorConfig['defaultColor'][node.type[0]];
+          }
+        } else {
+          if (node.type[0] === 'Trainer' && node.label === 'Sumit') {
+            node.type[0] = 'You';
+            temColorObj['You'] = this.colorConfig['defaultColor']['Spot'];
           }
         }
       }
@@ -1071,6 +1078,8 @@ export class GraphVisualizerComponent implements OnInit {
         obj.data = this.shiftColorKey(obj.data);
         this.insertIntoAllGraphArray(obj);
         this.insertIntoFilteredGraphArray(obj);
+        this.tick++;
+        this.ref.detectChanges();
       } else if (obj.hasOwnProperty('event') && obj.event === 'edit' || obj.event === 'delete' || obj.event === 'restore') {
         this.updateAllGraphArray(obj);
         this.updateFilteredGraphArray(obj);
@@ -1175,5 +1184,13 @@ export class GraphVisualizerComponent implements OnInit {
     } catch (e) {
       console.log("Method : insertIntoFilteredGraphArray", "Component : GraphVisualizerComponent", "Error : ", e);
     }
+  }
+
+  updateSelectedOption(propertValueEvent, propertyKey) {
+    // console.log(`property is  ${propertyKey} and value is ${this.selectedPropertiesObject[propertyKey]}`);
+    // if (!!propertyKey && this.selectedPropertiesObject[propertyKey] === this.ADD_NEW_PROPERTY) {
+    //   console.log('selected NEW PROPERTY for ', propertyKey);
+    //   this.availablePropertyList[propertyKey]['enableNewProperty'] = true;
+    // }
   }
 }
